@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+		<link rel="stylesheet" href="style.css">
+		<link href="iconic/css/iconic.css" rel="stylesheet">
+
+		<title>Launch BitcartCC on LunaNode</title>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Launch BitcartCC on LunaNode</h2>
+			<div id="errorbar" class="alert alert-danger" style="display:none"></div>
+			<div id="step1" class="stepdiv">
+				<p>For one cryptocurrency, this tool defaults to creating an m.1s VM(total monthly price: $3.50).</p>
+				<p>To get started, enter your <a href="https://www.lunanode.com">LunaNode</a> API key details below. You'll need to first <a href="https://dynamic.lunanode.com/panel/api">create an API key</a>.</p>
+				<form id="step1_form">
+					<div class="form-group row">
+						<label for="api_id" class="col-sm-2 col-form-label">API ID</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="api_id">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="api_key" class="col-sm-2 col-form-label">API Key</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="api_key">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="offset-sm-2 col-sm-10">
+							<button type="submit" class="btn btn-primary">Continue</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div id="step2" class="stepdiv" style="display:none">
+				<p>The following IP address has been reserved on your account: <strong id="step2_ip"></strong>.</p>
+				<p>Please point your hostname to this IP, and then enter the hostname below.</p>
+				<form id="step2_form">
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<input type="radio" name="hostname_type" class="hostname_type" data-type="autohostname" checked /> Use <strong id="step2_autohostname"></strong>.
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<input type="radio" name="hostname_type" class="hostname_type" data-type="user" /> Use my own hostname
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="hostname" class="col-sm-2 col-form-label">Hostname</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="hostname" placeholder="e.g. bitcartcc.example.com" disabled>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="offset-sm-2 col-sm-10">
+							<button type="submit" class="btn btn-primary">Continue</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div id="step3" class="stepdiv" style="display:none">
+				<p>Almost there! Just need a few final details before provisioning your VM:</p>
+				<form id="step3_form">
+					<div class="form-group row">
+						<label for="coins" class="col-sm-2 col-form-label">Supported Cryptocurrencies</label>
+						<div class="col-sm-10">
+							<input type="checkbox" class="supportedcoins" data-coin="btc" checked /> BTC
+							<input type="checkbox" class="supportedcoins" data-coin="bch" /> BCH
+							<input type="checkbox" class="supportedcoins" data-coin="ltc" /> LTC
+							<input type="checkbox" class="supportedcoins" data-coin="gzro" /> GZRO
+							<input type="checkbox" class="supportedcoins" data-coin="bsty" /> BSTY
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="email" class="col-sm-2 col-form-label">E-mail Address (optional)</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="email">
+							<small id="emailHelp" class="form-text text-muted">This will be used by Let's Encrypt to notify you about certificate expiration.</small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="storeemail" class="col-sm-2 col-form-label">Store E-mail Address (optional)</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="storeemail">
+							<small id="emailHelp" class="form-text text-muted">This will be used by your BitcartCC store to login and get products data.</small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="storepass" class="col-sm-2 col-form-label">Store Password (optional)</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="storepass">
+							<small id="emailHelp" class="form-text text-muted">This will be used by your BitcartCC store to login and get products data.</small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="storeid" class="col-sm-2 col-form-label">Store ID (optional)</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="storeid" value="1">
+							<small id="emailHelp" class="form-text text-muted">This will be used by your BitcartCC store to login and get products data.</small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="network" class="col-sm-2 col-form-label">Network</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="network">
+								<option value="mainnet">mainnet</option>
+								<option value="testnet">testnet</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="lightning" class="col-sm-2 col-form-label">Lightning</label>
+						<div class="col-sm-10">
+							<input type="checkbox" id="lightning" checked />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="plan" class="col-sm-2 col-form-label">VM Plan</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="plan">
+								<option value="m.1s" selected data-price="3.5">m.1s</option>
+								<option value="m.2" data-price="7">m.2</option>
+								<option value="m.4" data-price="14">m.4</option>
+								<option value="m.8" data-price="28">m.8</option>
+								<option value="s.2" data-price="14">s.2</option>
+								<option value="s.4" data-price="28">s.4</option>
+								<option value="c.1" data-price="20">c.1</option>
+							</select>
+							<small id="planHelp" class="form-text text-muted">VM plan, see <a href="https://dynamic.lunanode.com/info">https://dynamic.lunanode.com/info</a>.
+							<br />If using two or more coins, m.2 or m.4 is recommended.</small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="price" class="col-sm-2 col-form-label">Monthly Price</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="price" disabled>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="coins" class="col-sm-2 col-form-label">Acceleration</label>
+						<div class="col-sm-10">
+							<input type="checkbox" id="accelerate" checked /> Accelerate wallets synchronization. This enables <a href="https://wiki.lunanode.com/index.php/Burstable_Resources">"Pay for Additional CPU Utilization"</a>. It might speed up the process of your wallets' synchronization and improve general performance. Charges you if you exceed CPU utilization by your plan.
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="offset-sm-2 col-sm-10">
+							<button type="submit" class="btn btn-primary">Launch VM</button>
+						</div>
+					</div>
+					<h4>Advanced Options</h4>
+					<div class="form-group row">
+						<label for="sshkey" class="col-sm-2 col-form-label">SSH Key (optional)</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="sshkey" placeholder="e.g. ssh-rsa AAAA... x@y">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="repository" class="col-sm-2 col-form-label">Repository</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="repository" value="https://github.com/MrNaif2018/bitcart-docker">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="branch" class="col-sm-2 col-form-label">Branch</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="branch" value="master">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div id="step4" class="stepdiv" style="display:none">
+				<p>Your VM has launched successfully, and BitcartCC is being setup! After about five minutes, it'll be ready at <a id="step4_hostname" href=""></a>.</p>
+			</div>
+			<div id="loading" class="stepdiv" style="display:none">
+				<img src="loading.gif" width="200px" height="200px" />
+			</div>
+			<div id="loading2" class="stepdiv" style="display:none">
+				<p>This may take one or two minutes, please be patient...</p>
+				<img src="loading.gif" width="200px" height="200px" />
+			</div>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+		<script src="index.js?version=9"></script>
+	</body>
+</html>
