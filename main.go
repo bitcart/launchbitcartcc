@@ -84,7 +84,7 @@ func main() {
 		panic(err)
 	}
 	script := string(scriptBytes)
-
+	customDomain := "False"
 	fileServer := http.FileServer(http.Dir("static/"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
@@ -200,7 +200,10 @@ func main() {
 					}
 				}
 			})
+		} else {
+			customDomain = "True"
 		}
+		myscript = strings.Replace(myscript, "[CUSTOMDOMAIN]", customDomain, -1)
 
 		params := map[string]string{
 			"region":   "toronto",

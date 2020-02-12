@@ -6,6 +6,7 @@ import subprocess
 import sys
 import time
 
+custom_domain = [CUSTOMDOMAIN]
 hostname = "[HOSTNAME]"
 network = "[NETWORK]"
 email = "[EMAIL]"
@@ -35,11 +36,14 @@ for coin in coins:
 
 env["BITCART_CRYPTOS"] = coinstr
 env["BITCART_REVERSEPROXY"] = reverseproxy
-env["BITCART_HOST"] = "api{}".format(hostname)
-env["BITCART_ADMIN_HOST"] = "admin{}".format(hostname)
+delim = ""
+if custom_domain:
+    delim = "."
+env["BITCART_HOST"] = "api{delim}{}".format(hostname)
+env["BITCART_ADMIN_HOST"] = "admin{delim}{}".format(hostname)
 env["BITCART_FRONTEND_HOST"] = hostname
-env["BITCART_ADMIN_URL"] = "https://api{}".format(hostname)
-env["BITCART_FRONTEND_URL"] = "https://api{}".format(hostname)
+env["BITCART_ADMIN_URL"] = "https://api{delim}{}".format(hostname)
+env["BITCART_FRONTEND_URL"] = "https://api{delim}{}".format(hostname)
 env["BITCART_FRONTEND_EMAIL"] = store_email
 env["BITCART_FRONTEND_PASSWORD"] = store_pass
 env["BITCART_FRONTEND_STORE"] = store_id
