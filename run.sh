@@ -41,12 +41,9 @@ if custom_domain:
     delim = "."
 env["BITCART_HOST"] = "api{delim}{}".format(hostname, delim=delim)
 env["BITCART_ADMIN_HOST"] = "admin{delim}{}".format(hostname, delim=delim)
-env["BITCART_FRONTEND_HOST"] = hostname
+env["BITCART_STORE_HOST"] = hostname
 env["BITCART_ADMIN_URL"] = "https://api{delim}{}".format(hostname, delim=delim)
-env["BITCART_FRONTEND_URL"] = "https://api{delim}{}".format(hostname, delim=delim)
-env["BITCART_FRONTEND_EMAIL"] = store_email
-env["BITCART_FRONTEND_PASSWORD"] = store_pass
-env["BITCART_FRONTEND_STORE"] = store_id
+env["BITCART_STORE_URL"] = "https://api{delim}{}".format(hostname, delim=delim)
 env["BITCART_LETSENCRYPT_EMAIL"] = email
 
 for i in range(5):
