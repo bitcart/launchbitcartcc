@@ -16,7 +16,7 @@ import (
 	"time"
 )
 
-const IMAGE_ID = 121428
+const IMAGE_ID = 240277
 
 type ErrorResponse struct {
 	Error string `json:"error"`
@@ -126,9 +126,6 @@ func main() {
 		hostname := r.PostForm.Get("hostname")
 		sshKey := r.PostForm.Get("sshkey")
 		email := r.PostForm.Get("email")
-		storeEmail := r.PostForm.Get("storeemail")
-		storePass := r.PostForm.Get("storepass")
-		storeID := r.PostForm.Get("storeid")
 		network := r.PostForm.Get("network")
 		coins := r.PostForm.Get("coins")
 		lightning := r.PostForm.Get("lightning")
@@ -142,9 +139,6 @@ func main() {
 		myscript := script
 		myscript = strings.Replace(myscript, "[HOSTNAME]", hostname, -1)
 		myscript = strings.Replace(myscript, "[EMAIL]", email, -1)
-		myscript = strings.Replace(myscript, "[STOREEMAIL]", storeEmail, -1)
-		myscript = strings.Replace(myscript, "[STOREPASS]", storePass, -1)
-		myscript = strings.Replace(myscript, "[STOREID]", storeID, -1)
 		myscript = strings.Replace(myscript, "[NETWORK]", network, -1)
 		myscript = strings.Replace(myscript, "[COINS]", coins, -1)
 		myscript = strings.Replace(myscript, "[LIGHTNING]", lightning, -1)
