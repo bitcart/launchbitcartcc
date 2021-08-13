@@ -84,7 +84,6 @@ func main() {
 		panic(err)
 	}
 	script := string(scriptBytes)
-	customDomain := "False"
 	fileServer := http.FileServer(http.Dir("static/"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
@@ -164,24 +163,6 @@ func main() {
 				errorResponse(w, r, err.Error())
 				return
 			}
-			err = request(apiID, apiKey, "dns", "dyn-add", map[string]string{
-				"name": "admin" + baseName,
-				"ip":   ip,
-			}, nil)
-			if err != nil {
-				cleanup()
-				errorResponse(w, r, err.Error())
-				return
-			}
-			err = request(apiID, apiKey, "dns", "dyn-add", map[string]string{
-				"name": "api" + baseName,
-				"ip":   ip,
-			}, nil)
-			if err != nil {
-				cleanup()
-				errorResponse(w, r, err.Error())
-				return
-			}
 			cleanupFuncs = append(cleanupFuncs, func() {
 				var response LunaDynList
 				if err := request(apiID, apiKey, "dns", "dyn-list", nil, &response); err != nil {
@@ -189,15 +170,12 @@ func main() {
 					return
 				}
 				for _, dyn := range response.Dyns {
-					if dyn.Name == baseName || dyn.Name == "api"+baseName || dyn.Name == "admin"+baseName || dyn.IP == ip {
+					if dyn.Name == baseName || dyn.IP == ip {
 						request(apiID, apiKey, "dns", "dyn-remove", map[string]string{"dyn_id": dyn.ID}, nil)
 					}
 				}
 			})
-		} else {
-			customDomain = "True"
 		}
-		myscript = strings.Replace(myscript, "[CUSTOMDOMAIN]", customDomain, -1)
 
 		params := map[string]string{
 			"region":   "toronto",
