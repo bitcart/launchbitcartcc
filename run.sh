@@ -15,7 +15,7 @@ coinstr = "[COINS]"
 lightning = "[LIGHTNING]"
 
 reverseproxy = "nginx-https"
-coinmap = ["btc", "bch", "ltc", "gzro", "bsty"]
+coinmap = ["btc", "bch", "xrg", "ltc", "bsty"]
 
 # clone bitcart-docker
 if not os.path.exists("/root/bitcart-docker"):
